@@ -7,44 +7,43 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native'
-import { init, addAsema, fetchAllAsemat,addHalutaAsemat } from './db';
+} from 'react-native';
+import {init, addAsema, fetchAllAsemat, addHalutaAsemat,addOneFish,fetchAllFish} from './db';
 
 init()
-.then(()=>{
+  .then(() => {
     console.log('Tietokannan luonti onnistui!');
-}).catch((err)=>{
-  console.log('Database IS NOT initialized! '+err);
-});
+  })
+  .catch(err => {
+    console.log('Database IS NOT initialized! ' + err);
+  });
 
-addHalutaAsemat()
-.then(()=>{
-    console.log('Tietokannan luonti onnistui!');
-}).catch((err)=>{
-  console.log('LOOOL! '+err);
-});
+  addOneFish()
+  .then(() => {
+    console.log('Database creation succeeded!');
+  })
+  .catch(err => {
+    console.log('Database IS NOT initialized! ' + err);
+  });
 
+const Asemasivu = () => {
+  const [isInserted, setIsInserted] = useState(false);
+  const [asemaList, setAsemaList] = useState([]);
 
-const Asemasivu=()=> {
-  const [isInserted, setIsInserted]=useState(false);
-  const [asemaList, setAsemaList]=useState([]);
-
-  async function readAllAsemat(){
-    try{
-      const dbResult = await fetchAllAsemat();
-      console.log("dbResult readAllAsemat in App.js");
+  async function readAllAsemat() {
+    try {
+      const dbResult = await fetchAllFish();
+      //console.log("dbResult readAllAsemat in App.js");
       console.log(dbResult);
       setAsemaList(dbResult);
-    }
-    catch(err){
-      console.log("Error: "+err);
-    }
-    finally{
-      console.log("toimii?");
+    } catch (err) {
+      console.log('Error: ' + err);
+    } finally {
+      console.log('toimii?');
     }
   }
 
-//---------TYYLIT ALKAA----------------------------------
+  //---------TYYLIT ALKAA----------------------------------
   const styles = StyleSheet.create({
     listItemStyle: {
       borderWidth: 1,
@@ -89,7 +88,7 @@ const Asemasivu=()=> {
       flex: 8,
       alignItems: 'center',
       backgroundColor: '#3C9887',
-  
+
       width: '100%',
     },
     inputStyle: {
@@ -107,15 +106,9 @@ const Asemasivu=()=> {
     },
   });
 
-//---------TYYLIT LOPPUU------------------
-
-
+  //---------TYYLIT LOPPUU------------------
 
   return (
-
-    
-
-    
     <View style={styles.container}>
       <View style={styles.headercontainer}>
         <View style={styles.headerText}>
@@ -123,15 +116,17 @@ const Asemasivu=()=> {
         </View>
       </View>
 
-      <Button title="Read" onPress={()=>readAllAsemat()} />
-
-
+      <Button title="Read" onPress={() => readAllAsemat()} />
 
       <View style={styles.listStyle}>
-      <FlatList
+        <FlatList
           data={asemaList}
-          renderItem={(item)=><View><Text>{item.item.asema}</Text></View>}
-          />
+          renderItem={item => (
+            <View>
+              <Text>{item.item.asema}</Text>
+            </View>
+          )}
+        />
       </View>
 
       <TouchableOpacity
@@ -141,6 +136,6 @@ const Asemasivu=()=> {
       />
     </View>
   );
-}
+};
 
 export default Asemasivu;

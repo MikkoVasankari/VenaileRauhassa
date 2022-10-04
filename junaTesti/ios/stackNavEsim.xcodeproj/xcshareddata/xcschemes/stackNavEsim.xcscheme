@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "junaTesti.app"
-               BlueprintName = "junaTesti"
-               ReferencedContainer = "container:junaTesti.xcodeproj">
+               BuildableName = "stackNavEsim.app"
+               BlueprintName = "stackNavEsim"
+               ReferencedContainer = "container:stackNavEsim.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "junaTestiTests.xctest"
-               BlueprintName = "junaTestiTests"
-               ReferencedContainer = "container:junaTesti.xcodeproj">
+               BuildableName = "stackNavEsimTests.xctest"
+               BlueprintName = "stackNavEsimTests"
+               ReferencedContainer = "container:stackNavEsim.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "junaTesti.app"
-            BlueprintName = "junaTesti"
-            ReferencedContainer = "container:junaTesti.xcodeproj">
+            BuildableName = "stackNavEsim.app"
+            BlueprintName = "stackNavEsim"
+            ReferencedContainer = "container:stackNavEsim.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "junaTesti.app"
-            BlueprintName = "junaTesti"
-            ReferencedContainer = "container:junaTesti.xcodeproj">
+            BuildableName = "stackNavEsim.app"
+            BlueprintName = "stackNavEsim"
+            ReferencedContainer = "container:stackNavEsim.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

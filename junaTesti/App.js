@@ -8,7 +8,8 @@ import Aikataulusivu from './components/Aikataulusivu';
 import Kolmasscreen from './components/Kolmasscreen';
 import Asemasivu from './components/AsemaSivu';
 import Koti from './components/koti';
-import toka from './components/toka';
+import Toka from './components/toka';
+import Dropdown from './components/dropdown';
 
 const Naytot = createNativeStackNavigator();
 
@@ -20,7 +21,7 @@ const App=()=>{
       <Naytot.Screen  name='Aikataulusivu' component={Aikataulusivu} options={{ headerShown: false }}/>
       <Naytot.Screen  name='Kolmas' component={Kolmasscreen}/>
       <Naytot.Screen  name='Asemasivu' component={Asemasivu}/>
-      <Naytot.Screen  name='toka' component={toka}/>
+      <Naytot.Screen  name='Toka' component={Toka}/>
     </Naytot.Navigator>
    </NavigationContainer>
   );

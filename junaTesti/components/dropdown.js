@@ -25,22 +25,22 @@ const items = [
   {id: 10, name: 'instagram'},
 ];
  
-const App = () => {
+const Dropdown = () => {
   // Data Source for the SearchableDropdown
   const [serverData, setServerData] = useState([]);
  
   useEffect(() => {
-    fetch('https://aboutreact.herokuapp.com/demosearchables.php')
+    fetch('https://rata.digitraffic.fi/api/v1/metadata/stations')
       .then((response) => response.json())
       .then((responseJson) => {
         //Successful response from the API Call
-        setServerData(responseJson.results);
+        setServerData(responseJson);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
- 
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
@@ -96,6 +96,9 @@ const App = () => {
           Searchable Dropdown from Dynamic Array from Server
         </Text>
         <SearchableDropdown
+
+          serverData = {serverData}
+          
           onTextChange={(text) => console.log(text)}
           // Change listner on the searchable input
           onItemSelect={(item) => alert(JSON.stringify(item))}
@@ -128,7 +131,7 @@ const App = () => {
           }}
           items={serverData}
           // Mapping of item array
-          defaultIndex={2}
+          defaultIndex={3}
           // Default selected item index
           placeholder="placeholder"
           // Place holder for the search input
@@ -142,7 +145,7 @@ const App = () => {
   );
 };
  
-export default App;
+export default Dropdown;
  
 const styles = StyleSheet.create({
   container: {

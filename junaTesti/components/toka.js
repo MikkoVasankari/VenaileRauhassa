@@ -29,19 +29,19 @@ const AppButton = ({ onPress, title }) => (
   </TouchableOpacity>
 );
 
-const toka = ({ navigation }) => {
+const Toka = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.screenContainer}>
     <View style={styles.container}>
        <Text style={styles.headingText}>
-        Searchable Dropdown from Static Array --- ei ehkä tällä
+        Valitse haluamasi juna-asema
       </Text>
      {/*  <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff"
        onPress={()=>navigation.navigate("toka")} title="testi selaa asemia"/>  */}
       <SearchableDropdown
         onTextChange={(text) => console.log(text)}
         // Listner on the searchable input
-        onItemSelect={(item) => alert(JSON.stringify(item))}
+        onItemSelect={(item) => alert(JSON.stringify(item.name))}
         // Called after the selection
         containerStyle={{padding: 5}}
         // Suggestion container style
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 30,
   },
-
   screenContainer: {
     backgroundColor: '#3C9887',
     flex: 1,
@@ -112,9 +111,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
-  }
+  },headingText: {
+    alignSelf: "center",
+    padding: 8,
+  },
 });
 
   
   
-  export default toka;
+  export default Toka;

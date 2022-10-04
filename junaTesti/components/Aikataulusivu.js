@@ -71,25 +71,43 @@ const Aikataulusivu = param => {
     let slicetimeAtTheStation;
     let slicedTimeForUTC1;
     let slicedTimeForUTC2;
+
     let timeInFinnishTimezone;
 
-    // Junan aikataulu-listan maksimi pituus mikä tulee API-palvelusta
+
     let a = item.item.timeTableRows.length;
 
     for (let i = 0; i < item.item.timeTableRows.length; i++) {
-      // Etsitään aikataululistasta oikean aseman aikataulut
+      // Otetaan juna-aikataulut halutulta asemalta 
       if (item.item.timeTableRows[i].stationShortCode == stationSC) {
-        timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
-        slicetimeAtTheStation = timeAtTheStation.slice(11, 16);
+        
+        // Saapumis aikataulu
+        if (item.item.timeTableRows[i].type == 'ARRIVAL') {
+          timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
-        slicedTimeForUTC1 = slicetimeAtTheStation.slice(0, 2);
-        slicedTimeForUTC2 = slicetimeAtTheStation.slice(2, 9);
-        var b = parseInt(slicedTimeForUTC1);
-        b += 3;
-        timeInFinnishTimezone = b + slicedTimeForUTC2;
+          slicetimeAtTheStation = timeAtTheStation.slice(11, 19);
+
+          slicedTimeForUTC1 = slicetimeAtTheStation.slice(0, 2);
+          slicedTimeForUTC2 = slicetimeAtTheStation.slice(2, 9);
+          var b = parseInt(slicedTimeForUTC1);
+          b += 3;
+          timeInFinnishTimezone = b + slicedTimeForUTC2;
+        }
+        // Lähtemis aikataulu
+        if (item.item.timeTableRows[i].type == 'DEPARTURE') {
+          liveEstimateTime = item.item.timeTableRows[i].liveEstimateTime;
+          sliceLiveEstimateTime = liveEstimateTime.slice(11, 19);
+
+          slicedLiveEstimatedTimeForUTC1 = sliceLiveEstimateTime.slice(0, 2);
+          slicedLiveEstimatedTimeForUTC2 = sliceLiveEstimateTime.slice(2, 9);
+
+          var estimatedTimeInFinnishTimezone;
+          var b = parseInt(slicedLiveEstimatedTimeForUTC1);
+          b += 3;
+          estimatedTimeInFinnishTimezone = b + slicedLiveEstimatedTimeForUTC2;
+        }
       }
     }
-
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
@@ -99,6 +117,7 @@ const Aikataulusivu = param => {
           {item.item.commuterLineID} {item.item.trainType}-
           {item.item.trainNumber} 
         </Text>
+        <Text style={styles.listItemText}>Arvioitu lähtemisaika {estimatedTimeInFinnishTimezone}</Text>
       </View>
     );
   };

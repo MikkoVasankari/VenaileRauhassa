@@ -18,7 +18,7 @@ init()
 });
 
 
-const Sivu=()=> {
+const Asemasivu=()=> {
   const [isInserted, setIsInserted]=useState(false);
   const [asemaList, setAsemaList]=useState([]);
 
@@ -136,4 +136,4 @@ const Sivu=()=> {
   );
 }
 
-export default Sivu;
+export default Asemasivu;

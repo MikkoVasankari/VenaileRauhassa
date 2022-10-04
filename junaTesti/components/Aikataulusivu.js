@@ -182,7 +182,7 @@ const Aikataulusivu = param => {
           <TouchableOpacity>
             <Text
               style={styles.buttonText}
-              onPress={() => param.navigation.navigate('Koti')}>
+              onPress={() => param.navigation.navigate('Asemasivu')}>
               Hämeenlinna
             </Text>
           </TouchableOpacity>

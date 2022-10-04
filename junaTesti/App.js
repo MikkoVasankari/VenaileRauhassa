@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Kotiscreen from './components/Kotiscreen';
 import Aikataulusivu from './components/Aikataulusivu';
 import Kolmasscreen from './components/Kolmasscreen';
+import Asemasivu from './components/AsemaSivu';
 
 const Naytot = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const App=()=>{
       <Naytot.Screen  name='Koti' component={Kotiscreen} options={{ headerShown: false }}/>
       <Naytot.Screen  name='Toinen' component={Aikataulusivu} options={{ headerShown: false }}/>
       <Naytot.Screen  name='Kolmas' component={Kolmasscreen}/>
+      <Naytot.Screen  name='Asemasivu' component={Asemasivu}/>
     </Naytot.Navigator>
    </NavigationContainer>
   );

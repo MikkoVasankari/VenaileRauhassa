@@ -36,8 +36,8 @@ const toka = ({ navigation }) => {
        <Text style={styles.headingText}>
         Searchable Dropdown from Static Array --- ei ehkä tällä
       </Text>
-      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff"
-       onPress={()=>navigation.navigate("toka")} title="testi selaa asemia"/> 
+     {/*  <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff"
+       onPress={()=>navigation.navigate("toka")} title="testi selaa asemia"/>  */}
       <SearchableDropdown
         onTextChange={(text) => console.log(text)}
         // Listner on the searchable input

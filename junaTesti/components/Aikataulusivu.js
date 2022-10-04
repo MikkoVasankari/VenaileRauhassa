@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, FlatList, StyleSheet, TouchableOpacity, Button} from 'react-native';
 
-const Toinenscreen = param => {
+const Aikataulusivu = param => {
   const [junaList, addJuna] = useState([
     {
       id: 1,
@@ -227,4 +227,4 @@ const Toinenscreen = param => {
   );
 };
 
-export default Toinenscreen;
+export default Aikataulusivu;

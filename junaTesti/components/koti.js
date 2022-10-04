@@ -19,8 +19,8 @@ const koti = ({ navigation }) => {
   return (
     <View style={styles.screenContainer}>
       <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
-      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("eka")} title="selaa aikatauluja"/> 
-      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("toka")} title="Testimesta"/>
+      {/* <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("eka")} title="selaa aikatauluja"/> 
+      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("toka")} title="Testimesta"/> */}
     </View>
   );
 };

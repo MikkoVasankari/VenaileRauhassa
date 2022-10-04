@@ -20,20 +20,26 @@ export const init = () => {
         },
       );
 
-      tx.executeSql('insert into '+tableName+' (asema) values(Tampere,Kuopio,Helsinki,Vaasa,Turku,Riihimäki,Hämeenlinna);',
-      [asema],
-      () => {
-        resolve();
-      },
-
-      (_, err) => {
-        reject(err);
-      },
-    );
-
-
-
     });
+  });
+  return promise;
+};
+export const addHalutaAsemat=()=>{
+  const promise=new Promise((resolve, reject)=>{
+      db.transaction((tx)=>{
+          
+        tx.executeSql('insert into '+tableName+'(asema) values(Tampere);',
+        [],
+          
+          ()=>{
+                  resolve();
+          },
+          
+          (_,err)=>{
+              reject(err);
+          }
+          );
+      });
   });
   return promise;
 };
@@ -42,7 +48,7 @@ export const addAsema=(kaupunki)=>{
     const promise=new Promise((resolve, reject)=>{
         db.transaction((tx)=>{
             
-            tx.executeSql('insert into '+tableName+'(kaupunki) values(?);',
+            tx.executeSql('insert into '+tableName+'(asema) values(?);',
             
             [kaupunki],
             

@@ -8,13 +8,20 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native'
-import { init, addAsema, fetchAllAsemat } from './db';
+import { init, addAsema, fetchAllAsemat,addHalutaAsemat } from './db';
 
 init()
 .then(()=>{
     console.log('Tietokannan luonti onnistui!');
 }).catch((err)=>{
   console.log('Database IS NOT initialized! '+err);
+});
+
+addHalutaAsemat()
+.then(()=>{
+    console.log('Tietokannan luonti onnistui!');
+}).catch((err)=>{
+  console.log('LOOOL! '+err);
 });
 
 

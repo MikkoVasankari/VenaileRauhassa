@@ -1,4 +1,4 @@
-@@ -0,0 +1,60 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button, StyleSheet, Text, TextInput, FlatList, View, SafeAreaView, TouchableOpacity, Modal } from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
@@ -22,7 +22,7 @@ const koti = ({ navigation }) => {
   return (
     <View style={styles.screenContainer}>
       <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
-      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("eka")} title="selaa aikatauluja"/> 
+      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("eka")} /> 
     </View>
   );
 };

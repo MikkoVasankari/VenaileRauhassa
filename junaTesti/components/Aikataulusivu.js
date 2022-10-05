@@ -11,7 +11,7 @@ import {
 const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
 
-  // Halutun aseman tiedot aseman valitsemis sivulta
+  // Halutun aseman tiedot aseman valitsemis
   const stationSC = route.params.asemaKoodi;
   const stationName = route.params.asemaNimi;
 

@@ -1,14 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
-  TextInput,
-  FlatList,
   View,
-  SafeAreaView,
   TouchableOpacity,
-  Modal,
+  Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -26,11 +22,27 @@ const AppButton = ({onPress, title}) => (
 
 const Koti = ({navigation}) => {
   return (
+    
     <View style={styles.screenContainer}>
-      <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
-      <AppButton  title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("Aikataulusivu")} /> 
-      <AppButton title="Valitse juna-asema" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("Valitse Asema")} />
       
+      <View style={styles.imageContainer}>
+      <Image source={require('./assets/myimages/trainicon.jpg')}
+          style={styles.image} resizeMode='cover'/>
+      </View>
+
+      <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
+      <AppButton
+        title="selaa aikatauluja"
+        size="sm"
+        backgroundColor="#007bff"
+        onPress={() => navigation.navigate('Aikataulusivu')}
+      />
+      <AppButton
+        title="Valitse juna-asema"
+        size="sm"
+        backgroundColor="#007bff"
+        onPress={() => navigation.navigate('Valitse Asema')}
+      />
     </View>
   );
 };
@@ -61,6 +73,15 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     textTransform: 'uppercase',
+  },
+  imageContainer:{
+    height:200,
+    width:'50%',
+    overflow:'hidden',
+  },
+  image:{
+    height:'100%',
+    width:'100%'
   },
 });
 

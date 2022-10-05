@@ -25,10 +25,10 @@ const Koti = ({navigation}) => {
     
     <View style={styles.screenContainer}>
       
-      <View style={styles.imageContainer}>
+      {/* <View style={styles.imageContainer}>
       <Image source={require('./assets/myimages/trainicon.jpg')}
           style={styles.image} resizeMode='cover'/>
-      </View>
+      </View> */}
 
       <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
       <AppButton

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -35,6 +35,7 @@ const Aikataulusivu = ({navigation, route}) => {
     }
   };
 
+
   const renderTrain = item => {
     let timeAtTheStation;
     let slicetimeAtTheStation;
@@ -42,13 +43,6 @@ const Aikataulusivu = ({navigation, route}) => {
     let slicedTimeForUTC2;
 
     let timeInFinnishTimezone;
-
-    /*  let liveEstimateTime;
-    let sliceLiveEstimateTime;
-    let slicedLiveEstimatedTimeForUTC1;
-    let slicedLiveEstimatedTimeForUTC2;
-
-    let estimatedTimeInFinnishTimezone; */
 
     let a = item.item.timeTableRows.length;
 
@@ -79,6 +73,7 @@ const Aikataulusivu = ({navigation, route}) => {
         }
       }
     }
+
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>

@@ -7,15 +7,13 @@ var tableName="asemat";
 export const init=()=>{
     const promise=new Promise((resolve, reject)=>{
         db.transaction((tx)=>{
-            tx.executeSql('DROP TABLE IF EXISTS asemat', []); //uncomment this if needed - sometimes it is good to empty the table
-            //By default, primary key is auto_incremented - we do not add anything to that column
-            tx.executeSql('create table if not exists '+tableName+'(id integer not null primary key, breed text not null);',
-            [],//second parameters of execution:empty square brackets - this parameter is not needed when creating table
-            //If the transaction succeeds, this is called
+            tx.executeSql('DROP TABLE IF EXISTS asemat', []); 
+            tx.executeSql('create table if not exists '+tableName+'(id integer not null primary key, asema text not null, tunnus text not null);',
+            [],
             ()=>{
-                resolve();//There is no need to return anything
+                resolve();
             },
-            //If the transaction fails, this is called
+            
             (_,err)=>{
                 reject(err);
             }
@@ -25,18 +23,18 @@ export const init=()=>{
     return promise;
 };
 
-export const addOneFish=()=>{
+export const addOneAsema=()=>{
     const promise=new Promise((resolve, reject)=>{
         db.transaction((tx)=>{
-            //Here we use the Prepared statement, just putting placeholders to the values to be inserted
-            tx.executeSql('insert into '+tableName+'(breed) values(?);',
-            //And the values come here
-            ["tampere"],
-            //If the transaction succeeds, this is called
+            
+            tx.executeSql('insert into '+tableName+'(asema, tunnus) values(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?)',
+            
+            ["Tampere","Tpe","Helsinki","Hki","Turku","Tku","Hämeenlinna","Hl","Lahti","Lh","Riihimäki","Ri","Nokia","Noa","Pasila","Psl"],
+            
             ()=>{
                     resolve();
             },
-            //If the transaction fails, this is called
+            
             (_,err)=>{
                 reject(err);
             }
@@ -46,7 +44,7 @@ export const addOneFish=()=>{
     return promise;
 };
 
-export const fetchAllFish=()=>{
+export const fetchAllAsemat=()=>{
   const promise=new Promise((resolve, reject)=>{
       db.transaction((tx)=>{
           //Here we select all from the table fish

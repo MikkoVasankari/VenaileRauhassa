@@ -31,7 +31,7 @@ const Toka = ({navigation}) => {
   // Data Source for the SearchableDropdown
   const [serverData, setServerData] = useState([]);
 
-  useEffect(() => {
+   useEffect(() => {
     fetch('https://rata.digitraffic.fi/api/v1/metadata/stations')
       .then(response => response.json())
 
@@ -44,7 +44,8 @@ const Toka = ({navigation}) => {
       .catch(error => {
         console.error(error);
       });
-  }, []);
+  }, [serverData]);
+
 
   const asemat = [];
 
@@ -63,7 +64,7 @@ const Toka = ({navigation}) => {
         <Text style={styles.headingText}>Valitse haluamasi juna-asema</Text>
 
         <SearchableDropdown
-          // Listner on the searchable input
+          // Listener on the searchable input
           onItemSelect={item => {
             alert('Valitsit aseman ' + item.name);
             navigation.navigate('Aikataulusivu', {
@@ -71,7 +72,7 @@ const Toka = ({navigation}) => {
               asemaNimi: item.name,
             });
           }}
-          onTextChange = {(text)=> console.log(text)}
+          onTextChange={text => console.log(text)}
           // Called after the selection
           containerStyle={{padding: 5}}
           // Suggestion container style

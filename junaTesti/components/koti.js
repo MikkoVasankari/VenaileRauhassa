@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 TouchableOpacity.defaultProps = {activeOpacity: 0.8};
@@ -22,20 +16,27 @@ const AppButton = ({onPress, title}) => (
 
 const Koti = ({navigation}) => {
   return (
-    
     <View style={styles.screenContainer}>
-      
-      {/* <View style={styles.imageContainer}>
-      <Image source={require('./assets/myimages/trainicon.jpg')}
-          style={styles.image} resizeMode='cover'/>
-      </View> */}
-
+      <View style={styles.kuvaloota}>
+        <View style={styles.imageContainer}>
+          <Image
+            source={require('./assets/myimages/trainicon.jpg')}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        </View>
+      </View>
       <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
       <AppButton
         title="selaa aikatauluja"
         size="sm"
         backgroundColor="#007bff"
-        onPress={() => navigation.navigate('Aikataulusivu')}
+        onPress={() =>
+          navigation.navigate('Aikataulusivu', {
+            asemaKoodi: 'HL',
+            asemaNimi: 'Hämeenlinna',
+          })
+        }
       />
       <AppButton
         title="Valitse juna-asema"
@@ -74,14 +75,22 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textTransform: 'uppercase',
   },
-  imageContainer:{
-    height:200,
-    width:'50%',
-    overflow:'hidden',
+  kuvaloota:{
+    alignSelf: 'center',
+    width:200,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  image:{
-    height:'100%',
-    width:'100%'
+  imageContainer: {
+    alignContent:"center",
+    height: 200,
+    width: '50%',
+    overflow: 'hidden',
+  },
+  image: {
+    height: '100%',
+    width: '100%',
   },
 });
 

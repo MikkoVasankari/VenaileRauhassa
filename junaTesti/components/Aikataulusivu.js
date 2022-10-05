@@ -24,7 +24,7 @@ const Aikataulusivu = ({navigation, route}) => {
 
         'https://rata.digitraffic.fi/api/v1/live-trains/station/' +
           stationSC +
-          '?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter',
+          '?minutes_before_departure=60&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0&train_categories=Long-distance&train_categories=Commuter',
       );
       let json = await response.json();
 
@@ -34,7 +34,6 @@ const Aikataulusivu = ({navigation, route}) => {
       console.log(error);
     }
   };
-
 
   const renderTrain = item => {
     let timeAtTheStation;
@@ -60,7 +59,8 @@ const Aikataulusivu = ({navigation, route}) => {
           var b = parseInt(slicedTimeForUTC1);
           b += 3;
           timeInFinnishTimezone = b + slicedTimeForUTC2;
-        } else if (item.item.timeTableRows[i].type == 'DEPARTURE') {
+        }
+        if (item.item.timeTableRows[i].type == 'DEPARTURE') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
           slicetimeAtTheStation = timeAtTheStation.slice(11, 19);

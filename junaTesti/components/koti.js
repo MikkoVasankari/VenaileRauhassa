@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   kuvaloota:{
+    backgroundColor: '#3C9887',
     alignSelf: 'center',
     width:200,
     backgroundColor: '#fff',

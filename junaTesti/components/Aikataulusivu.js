@@ -1,57 +1,26 @@
 import React, {useState} from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity, Button} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  Button,
+} from 'react-native';
 
-const Aikataulusivu = param => {
-  const [junaList, addJuna] = useState([
-    {
-      id: 1,
-      aika: '09:40',
-      kesto: '60 min',
-      maaranpaa: 'Helsinki',
-      junatyyppi: 'Lähijuna R',
-    },
-    {
-      id: 2,
-      aika: '10:40',
-      kesto: '60 min',
-      maaranpaa: 'Tampere',
-      junatyyppi: 'Lähijuna R',
-    },
-    {
-      id: 3,
-      aika: '11:40',
-      kesto: '60 min',
-      maaranpaa: 'Helsinki',
-      junatyyppi: 'Lähijuna R',
-    },
-  ]);
-
-  const keyHandler = item => {
-    return item.id.toString();
-  };
-
-  const renderItem = item => {
-    return (
-      <View style={styles.listItem}>
-        <Text style={styles.listItemText}>
-          {item.item.aika} {item.item.kesto} {item.item.maaranpaa}{' '}
-          {item.item.junatyyppi}
-        </Text>
-      </View>
-    );
-  };
-  
+const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
 
-  // Halutun aseman stationShortCode
-  const stationSC = 'HL';
+  // Halutun aseman tiedot aseman valitsemis sivulta
+  const stationSC = route.params.asemaKoodi;
+  const stationName = route.params.asemaNimi;
 
   const fetchTrain = async () => {
     try {
       let response = await fetch(
         // https://rata.digitraffic.fi/api/v1/live-trains/station/HL --- Antaa tietoja HL(Hämeenlinnan asema) tulevista junista.
         // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
-        // https://rata.digitraffic.fi/api/v1/live-trains/station/HL?minutes_before_departure=15&minutes_after_departure=5&minutes_before_arrival=15&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter'
+        // https://rata.digitraffic.fi/api/v1/live-trains/station/RI?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
 
         'https://rata.digitraffic.fi/api/v1/live-trains/station/' +
           stationSC +
@@ -74,14 +43,19 @@ const Aikataulusivu = param => {
 
     let timeInFinnishTimezone;
 
+    /*  let liveEstimateTime;
+    let sliceLiveEstimateTime;
+    let slicedLiveEstimatedTimeForUTC1;
+    let slicedLiveEstimatedTimeForUTC2;
+
+    let estimatedTimeInFinnishTimezone; */
 
     let a = item.item.timeTableRows.length;
 
     for (let i = 0; i < item.item.timeTableRows.length; i++) {
-      // Otetaan juna-aikataulut halutulta asemalta 
+      // Otetaan juna-aikataulut halutulta asemalta
       if (item.item.timeTableRows[i].stationShortCode == stationSC) {
-        
-        // Saapumis aikataulu
+        // Lähtemis aikataulu
         if (item.item.timeTableRows[i].type == 'ARRIVAL') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
@@ -92,35 +66,34 @@ const Aikataulusivu = param => {
           var b = parseInt(slicedTimeForUTC1);
           b += 3;
           timeInFinnishTimezone = b + slicedTimeForUTC2;
-        }
-        // Lähtemis aikataulu
-        if (item.item.timeTableRows[i].type == 'DEPARTURE') {
-          liveEstimateTime = item.item.timeTableRows[i].liveEstimateTime;
-          sliceLiveEstimateTime = liveEstimateTime.slice(11, 19);
+        } else if (item.item.timeTableRows[i].type == 'DEPARTURE') {
+          timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
-          slicedLiveEstimatedTimeForUTC1 = sliceLiveEstimateTime.slice(0, 2);
-          slicedLiveEstimatedTimeForUTC2 = sliceLiveEstimateTime.slice(2, 9);
+          slicetimeAtTheStation = timeAtTheStation.slice(11, 19);
 
-          var estimatedTimeInFinnishTimezone;
-          var b = parseInt(slicedLiveEstimatedTimeForUTC1);
+          slicedTimeForUTC1 = slicetimeAtTheStation.slice(0, 2);
+          slicedTimeForUTC2 = slicetimeAtTheStation.slice(2, 9);
+          var b = parseInt(slicedTimeForUTC1);
           b += 3;
-          estimatedTimeInFinnishTimezone = b + slicedLiveEstimatedTimeForUTC2;
+          timeInFinnishTimezone = b + slicedTimeForUTC2;
         }
       }
     }
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
-          {timeInFinnishTimezone}{' '}
-          {item.item.timeTableRows[a-1].stationShortCode}{' '}
-          {item.item.trainCategory} Train{' '}
-          {item.item.commuterLineID} {item.item.trainType}-
-          {item.item.trainNumber} 
+          {item.item.timeTableRows[a - 1].stationShortCode}{' '}
+          {item.item.trainCategory} Train {item.item.commuterLineID}{' '}
+          {item.item.trainType}-{item.item.trainNumber}
         </Text>
-        <Text style={styles.listItemText}>Arvioitu lähtemisaika {estimatedTimeInFinnishTimezone}</Text>
+        <Text style={styles.listItemText}>
+          Arvioitu lähtemisaika {timeInFinnishTimezone}
+        </Text>
       </View>
     );
   };
+
+  fetchTrain();
 
   const styles = StyleSheet.create({
     container: {
@@ -201,20 +174,14 @@ const Aikataulusivu = param => {
           <TouchableOpacity>
             <Text
               style={styles.buttonText}
-              onPress={() => param.navigation.navigate('Asemasivu')}>
-              Hämeenlinna
+              onPress={() => navigation.navigate('Asemasivu')}>
+              {stationName}
             </Text>
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.timetableContainer}>
         <Text>Lähtevät junat:</Text>
-        <FlatList
-          style={styles.listStyle}
-          keyExtractor={keyHandler}
-          data={junaList}
-          renderItem={renderItem}
-        />
       </View>
 
       <View>
@@ -225,20 +192,12 @@ const Aikataulusivu = param => {
             renderItem={renderTrain}
           />
         </View>
-
-        <View>
-          <Button
-            style={styles.buttonStyle}
-            title="Read Trains"
-            onPress={fetchTrain}
-          />
-        </View>
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={() => param.navigation.navigate('Koti')}>
+          onPress={() => navigation.navigate('Koti')}>
           <Text style={styles.buttonText}> Takaisin </Text>
         </TouchableOpacity>
       </View>

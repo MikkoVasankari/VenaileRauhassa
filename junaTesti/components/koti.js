@@ -29,7 +29,8 @@ const Koti = ({navigation}) => {
     <View style={styles.screenContainer}>
       <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
       <AppButton  title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("Aikataulusivu")} /> 
-      <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("Toka")} />
+      <AppButton title="Valitse juna-asema" size="sm" backgroundColor="#007bff" onPress={()=>navigation.navigate("Valitse Asema")} />
+      
     </View>
   );
 };

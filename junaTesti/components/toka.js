@@ -1,94 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, TextInput, FlatList, View, SafeAreaView, TouchableOpacity, Modal } from 'react-native';
-import LinearGradient from "react-native-linear-gradient";
+import React, {useState, useEffect} from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  FlatList,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 // npm install react-native-searchable-dropdown <-install first and then import
 
-const items = [
-  // name key is must. It is to show the text in front
-  {id: 1, name: 'Hämeenlinna'},
-  {id: 2, name: 'Riihimäki'},
-  {id: 3, name: 'Helsinki'},
-  {id: 4, name: 'Turku'},
+TouchableOpacity.defaultProps = {activeOpacity: 0.8};
 
-];
-
-
-
-TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
-
-const AppButton = ({ onPress, title }) => (
+const AppButton = ({onPress, title}) => (
   <TouchableOpacity onPress={onPress}>
     <LinearGradient
-      colors={["#004d40", "#009688"]}
-      style={styles.appButtonContainer}
-    >
+      colors={['#004d40', '#009688']}
+      style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>{title}</Text>
     </LinearGradient>
   </TouchableOpacity>
 );
 
-const Toka = ({ navigation }) => {
+const Toka = ({navigation}) => {
+  // Data Source for the SearchableDropdown
+  const [serverData, setServerData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://rata.digitraffic.fi/api/v1/metadata/stations')
+      .then(response => response.json())
+
+      .then(responseJson => {
+        //Successful response from the API Call
+
+        setServerData(responseJson);
+      })
+
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
+  const asemat = [];
+
+  for (let i = 0; i < serverData.length; i++) {
+    newAsema = {
+      id: i,
+      name: serverData[i].stationName,
+      stationShortCode: serverData[i].stationShortCode,
+    };
+    asemat.push(newAsema);
+  }
+
   return (
     <SafeAreaView style={styles.screenContainer}>
-    <View style={styles.container}>
-       <Text style={styles.headingText}>
-        Valitse haluamasi juna-asema
-      </Text>
-     {/*  <AppButton title="selaa aikatauluja" size="sm" backgroundColor="#007bff"
-       onPress={()=>navigation.navigate("toka")} title="testi selaa asemia"/>  */}
-      <SearchableDropdown
-        onTextChange={(text) => console.log(text)}
-        // Listner on the searchable input
-        onItemSelect={(item) => alert(JSON.stringify(item.name))}
-        // Called after the selection
-        containerStyle={{padding: 5}}
-        // Suggestion container style
-        textInputStyle={{
-          // Inserted text style
-          padding: 12,
-          borderWidth: 1,
-          borderColor: '#ccc',
-          backgroundColor: '#FAF7F6',
-        }}
-        itemStyle={{
-          // Single dropdown item style
-          padding: 10,
-          marginTop: 2,
-          backgroundColor: '#FAF9F8',
-          borderColor: '#bbb',
-          borderWidth: 1,
-        }}
-        itemTextStyle={{
-          // Text style of a single dropdown item
-          color: '#222',
-        }}
-        itemsContainerStyle={{
-          // Items container style you can pass maxHeight
-          // To restrict the items dropdown hieght
-          maxHeight: '60%',
-        }}
-        items={items}
-        // Mapping of item array
-        defaultIndex={2}
-        // Default selected item index
-        placeholder="Valitse Asema"
-        // place holder for the search input
-        resPtValue={false}
-        // Reset textInput Value with true and false state
-        underlineColorAndroid="transparent"
-        // To remove the underline from the android input
-      /> 
-            </View>
+      <View style={styles.container}>
+        <Text style={styles.headingText}>Valitse haluamasi juna-asema</Text>
+
+        <SearchableDropdown
+          // Listner on the searchable input
+          onItemSelect={item => {
+            alert('Valitsit aseman ' + item.name);
+            navigation.navigate('Aikataulusivu', {
+              asemaKoodi: item.stationShortCode,
+              asemaNimi: item.name,
+            });
+          }}
+          onTextChange = {(text)=> console.log(text)}
+          // Called after the selection
+          containerStyle={{padding: 5}}
+          // Suggestion container style
+          textInputStyle={{
+            // Inserted text style
+            padding: 12,
+            borderWidth: 1,
+            borderColor: '#ccc',
+            backgroundColor: '#FAF7F6',
+          }}
+          itemStyle={{
+            // Single dropdown item style
+            padding: 10,
+            marginTop: 2,
+            backgroundColor: '#FAF9F8',
+            borderColor: '#bbb',
+            borderWidth: 1,
+          }}
+          itemTextStyle={{
+            // Text style of a single dropdown item
+            color: '#222',
+          }}
+          itemsContainerStyle={{
+            // Items container style you can pass maxHeight
+            // To restrict the items dropdown hieght
+            maxHeight: '60%',
+          }}
+          items={asemat}
+          // Mapping of item array
+          defaultIndex={2}
+          // Default selected item index
+          placeholder="Valitse Asema"
+          // place holder for the search input
+          resPtValue={false}
+          // Reset textInput Value with true and false state
+          underlineColorAndroid="transparent"
+          // To remove the underline from the android input
+        />
+      </View>
     </SafeAreaView>
   );
 };
 
-
 const styles = StyleSheet.create({
   venaaTeksti: {
-    alignSelf: "center",
+    alignSelf: 'center',
     color: 'blue',
     fontWeight: 'bold',
     fontSize: 30,
@@ -96,27 +125,27 @@ const styles = StyleSheet.create({
   screenContainer: {
     backgroundColor: '#3C9887',
     flex: 1,
-    justifyContent: "flex-start",
-    padding: 16
+    justifyContent: 'flex-start',
+    padding: 16,
   },
   appButtonContainer: {
     elevation: 5,
     borderRadius: 15,
     paddingVertical: 10,
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
   },
   appButtonText: {
     fontSize: 18,
-    color: "white",
-    fontWeight: "bold",
-    alignSelf: "center",
-    textTransform: "uppercase"
-  },headingText: {
-    alignSelf: "center",
+    color: 'white',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
+  },
+  headingText: {
+    alignSelf: 'center',
+    color: 'black',
     padding: 8,
   },
 });
 
-  
-  
-  export default Toka;
+export default Toka;

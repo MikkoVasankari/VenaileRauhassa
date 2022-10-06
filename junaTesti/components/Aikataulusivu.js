@@ -35,6 +35,8 @@ const Aikataulusivu = ({navigation, route}) => {
     }
   };
 
+  console.log(trainList);
+
   const renderTrain = item => {
     let timeAtTheStation;
     let slicetimeAtTheStation;
@@ -77,6 +79,7 @@ const Aikataulusivu = ({navigation, route}) => {
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
+          Määränpää{' '}
           {item.item.timeTableRows[a - 1].stationShortCode}{' '}
           {item.item.trainCategory} Train {item.item.commuterLineID}{' '}
           {item.item.trainType}-{item.item.trainNumber}
@@ -87,8 +90,6 @@ const Aikataulusivu = ({navigation, route}) => {
       </View>
     );
   };
-
-  fetchTrain();
 
   const styles = StyleSheet.create({
     container: {
@@ -176,7 +177,7 @@ const Aikataulusivu = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.timetableContainer}>
-        <Text>Lähtevät junat:</Text>
+        <Text>Saapuvat / Lähtevät junat:</Text>
       </View>
 
       <View>
@@ -187,6 +188,14 @@ const Aikataulusivu = ({navigation, route}) => {
             renderItem={renderTrain}
           />
         </View>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => fetchTrain()}>
+          <Text style={styles.buttonText}> Lue junat </Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>

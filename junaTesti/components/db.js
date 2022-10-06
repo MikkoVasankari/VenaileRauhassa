@@ -29,7 +29,7 @@ export const addOneAsema=()=>{
             
             tx.executeSql('insert into '+tableName+'(asema, tunnus) values(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?)',
             
-            ["Tampere","Tpe","Helsinki","Hki","Turku","Tku","Hämeenlinna","Hl","Lahti","Lh","Riihimäki","Ri","Nokia","Noa","Pasila","Psl"],
+            ["Tampere","TPE","Helsinki","HKI","Turku","TKU","Hämeenlinna","HL","Lahti","LH","Riihimäki","RI","Nokia","NOA","Pasila","PSL"],
             
             ()=>{
                     resolve();
@@ -54,9 +54,9 @@ export const fetchAllAsemat=()=>{
                   //And add all the items of the result (database rows/records) into that table
                   for (let i = 0; i < result.rows.length; i++){
                       items.push(result.rows.item(i));//The form of an item is {"breed": "Pike", "id": 1, "weight": 5000}
-                      console.log(result.rows.item(i));//For debugging purposes to see the data in console window
+                      //console.log(result.rows.item(i));//For debugging purposes to see the data in console window
                   }
-                  console.log(items);//For debugging purposes to see the data in console window
+                  //console.log(items);//For debugging purposes to see the data in console window
                   resolve(items);//The data the Promise will have when returned
               },
               (tx,err)=>{

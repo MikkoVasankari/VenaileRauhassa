@@ -31,7 +31,7 @@ const Toka = ({navigation}) => {
   // Data Source for the SearchableDropdown
   const [serverData, setServerData] = useState([]);
 
-   useEffect(() => {
+  /* useEffect(() => {
     fetch('https://rata.digitraffic.fi/api/v1/metadata/stations')
       .then(response => response.json())
 
@@ -44,8 +44,25 @@ const Toka = ({navigation}) => {
       .catch(error => {
         console.error(error);
       });
-  }, [serverData]);
+  }, [serverData]); */
 
+  const fetchTrain = async () => {
+    try {
+      let response = await fetch(
+        // https://rata.digitraffic.fi/api/v1/live-trains/station/HL --- Antaa tietoja HL(Hämeenlinnan asema) tulevista junista.
+        // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
+        // https://rata.digitraffic.fi/api/v1/live-trains/station/RI?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
+
+        'https://rata.digitraffic.fi/api/v1/metadata/stations',
+      );
+      let json = await response.json();
+
+      // console.log(json);
+      setServerData(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const asemat = [];
 
@@ -111,6 +128,14 @@ const Toka = ({navigation}) => {
           underlineColorAndroid="transparent"
           // To remove the underline from the android input
         />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.buttonStyle}
+          onPress={() => fetchTrain()}>
+          <Text style={styles.buttonText}> Lue junat </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -8,7 +8,14 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {init, addOneAsema, fetchAllAsemat, addHalutaAsemat,addOneFish,fetchAllFish} from './db';
+import {
+  init,
+  addOneAsema,
+  fetchAllAsemat,
+  addHalutaAsemat,
+  addOneFish,
+  fetchAllFish,
+} from './db';
 
 init()
   .then(() => {
@@ -18,7 +25,7 @@ init()
     console.log('Database IS NOT initialized! ' + err);
   });
 
-  addOneAsema()
+addOneAsema()
   .then(() => {
     console.log('Database creation succeeded!');
   })
@@ -26,7 +33,7 @@ init()
     console.log('Database IS NOT initialized! ' + err);
   });
 
-const Asemasivu = () => {
+const Asemasivu = ({navigation}) => {
   const [isInserted, setIsInserted] = useState(false);
   const [asemaList, setAsemaList] = useState([]);
 
@@ -34,14 +41,12 @@ const Asemasivu = () => {
     try {
       const dbResult = await fetchAllAsemat();
       //console.log("dbResult readAllAsemat in App.js");
-      console.log(dbResult);
       setAsemaList(dbResult);
     } catch (err) {
       console.log('Error: ' + err);
-    } finally {
-      console.log('toimii?');
-    }
+    } 
   }
+  readAllAsemat();
 
   //---------TYYLIT ALKAA----------------------------------
   const styles = StyleSheet.create({
@@ -55,7 +60,6 @@ const Asemasivu = () => {
     container: {
       flex: 2,
       backgroundColor: '#3C9887',
-     
     },
     headercontainer: {
       justifyContent: 'center',
@@ -88,27 +92,26 @@ const Asemasivu = () => {
       textDecorationLine: 'bold',
       fontStyle: 'italic',
       width: '80%',
-      fontSize: 40, 
+      fontSize: 40,
       justifyContent: 'center',
     },
-  
-    listcontainer:{
+
+    listcontainer: {
       backgroundColor: '#3C9887',
       justifyContent: 'center',
       alignItems: 'center',
     },
 
-
-    listStyle: { //Ja tähän vähän siistimpää tyylittelyä 4.10
+    listStyle: {
+      //Ja tähän vähän siistimpää tyylittelyä 4.10
       backgroundColor: '#c4c4c4',
       borderColor: 'black',
       borderWidth: 2,
       borderRadius: 5,
       width: '100%',
-      
+
       backgroundColor: 'white',
-      
-      
+
       width: '80%',
     },
     inputStyle: {
@@ -129,36 +132,31 @@ const Asemasivu = () => {
   //---------TYYLIT LOPPUU------------------
 
   return (
-    <View style={styles.container}> 
-
-
-
+    <View style={styles.container}>
       <View style={styles.headercontainer}>
-
         <View style={styles.headerText}>
           <Text>LEMPI ASEMASI OVAT TÄSSÄ</Text>
         </View>
-
       </View>
 
-      <Button title="Read" onPress={() => readAllAsemat()} />
-      
       <View style={styles.listcontainer}>
-      <Text>Asemat:</Text>
+        <Text>Asemat:</Text>
         <FlatList
-        style={styles.listStyle}
+          style={styles.listStyle}
           data={asemaList}
           renderItem={item => (
-            
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={() => navigation.navigate('Aikataulusivu', {
+                asemaKoodi: item.item.tunnus,
+                asemaNimi: item.item.asema,
+              })}>
+                
               <Text>{item.item.asema}</Text>
-            
+            </TouchableOpacity>
           )}
         />
-
       </View>
-      
-      
-      
     </View>
   );
 };

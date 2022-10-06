@@ -8,7 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {init, addAsema, fetchAllAsemat, addHalutaAsemat,addOneFish,fetchAllFish} from './db';
+import {init, addOneAsema, fetchAllAsemat, addHalutaAsemat,addOneFish,fetchAllFish} from './db';
 
 init()
   .then(() => {
@@ -18,7 +18,7 @@ init()
     console.log('Database IS NOT initialized! ' + err);
   });
 
-  addOneFish()
+  addOneAsema()
   .then(() => {
     console.log('Database creation succeeded!');
   })
@@ -32,7 +32,7 @@ const Asemasivu = () => {
 
   async function readAllAsemat() {
     try {
-      const dbResult = await fetchAllFish();
+      const dbResult = await fetchAllAsemat();
       //console.log("dbResult readAllAsemat in App.js");
       console.log(dbResult);
       setAsemaList(dbResult);
@@ -53,14 +53,27 @@ const Asemasivu = () => {
       width: '80%',
     },
     container: {
-      flex: 1,
+      flex: 2,
       backgroundColor: '#3C9887',
-      alignItems: 'center',
-      justifyContent: 'center',
+     
     },
     headercontainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    listcontainer: {
+      borderWidth: 2,
+      padding: 2,
+      borderColor: 'black',
+      borderRadius: 3,
+      width: '90%',
+      alignItems: 'center',
+      backgroundColor: 'white',
+      borderRadius: 1,
+      fontSize: 30,
+    },
+    headerText: {
       marginTop: 10,
-      marginBottom: 10,
       borderWidth: 2,
       padding: 2,
       borderColor: 'black',
@@ -69,27 +82,34 @@ const Asemasivu = () => {
       alignItems: 'center',
       backgroundColor: 'white',
     },
-    headerText: {
+
+    listText: {
       color: 'black',
       textDecorationLine: 'bold',
       fontStyle: 'italic',
-      fontSize: '100', // ei toimi :(
+      width: '80%',
+      fontSize: 40, 
+      justifyContent: 'center',
     },
-    formView: {
-      flex: 1,
-      flexDirection: 'row',
+  
+    listcontainer:{
       backgroundColor: '#3C9887',
+      justifyContent: 'center',
       alignItems: 'center',
-      justifyContent: 'space-around',
-      marginTop: 20,
-      width: '100%',
     },
-    listStyle: {
-      flex: 8,
-      alignItems: 'center',
-      backgroundColor: '#3C9887',
 
+
+    listStyle: { //Ja tähän vähän siistimpää tyylittelyä 4.10
+      backgroundColor: '#c4c4c4',
+      borderColor: 'black',
+      borderWidth: 2,
+      borderRadius: 5,
       width: '100%',
+      
+      backgroundColor: 'white',
+      
+      
+      width: '80%',
     },
     inputStyle: {
       backgroundColor: '#abc',
@@ -109,31 +129,36 @@ const Asemasivu = () => {
   //---------TYYLIT LOPPUU------------------
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container}> 
+
+
+
       <View style={styles.headercontainer}>
+
         <View style={styles.headerText}>
-          <Text>ASEMASI OVAT TÄSSÄ</Text>
+          <Text>LEMPI ASEMASI OVAT TÄSSÄ</Text>
         </View>
+
       </View>
 
       <Button title="Read" onPress={() => readAllAsemat()} />
-
-      <View style={styles.listStyle}>
+      
+      <View style={styles.listcontainer}>
+      <Text>Asemat:</Text>
         <FlatList
+        style={styles.listStyle}
           data={asemaList}
           renderItem={item => (
-            <View>
+            
               <Text>{item.item.asema}</Text>
-            </View>
+            
           )}
         />
-      </View>
 
-      <TouchableOpacity
-        style={styles.touchableStyle}
-        title="Takaisin"
-        //onPress={takaisinpolku} tähän sitten oikea polku
-      />
+      </View>
+      
+      
+      
     </View>
   );
 };

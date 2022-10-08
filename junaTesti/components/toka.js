@@ -1,14 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
-  TextInput,
-  FlatList,
   View,
   SafeAreaView,
   TouchableOpacity,
-  Modal,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchableDropdown from 'react-native-searchable-dropdown';
@@ -28,30 +24,13 @@ const AppButton = ({onPress, title}) => (
 );
 
 const Toka = ({navigation}) => {
-  // Data Source for the SearchableDropdown
+  
   const [serverData, setServerData] = useState([]);
 
-  /* useEffect(() => {
-    fetch('https://rata.digitraffic.fi/api/v1/metadata/stations')
-      .then(response => response.json())
-
-      .then(responseJson => {
-        //Successful response from the API Call
-
-        setServerData(responseJson);
-      })
-
-      .catch(error => {
-        console.error(error);
-      });
-  }, [serverData]); */
-
-  const fetchTrain = async () => {
+  const fetchStations= async () => {
     try {
       let response = await fetch(
-        // https://rata.digitraffic.fi/api/v1/live-trains/station/HL --- Antaa tietoja HL(Hämeenlinnan asema) tulevista junista.
         // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
-        // https://rata.digitraffic.fi/api/v1/live-trains/station/RI?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
 
         'https://rata.digitraffic.fi/api/v1/metadata/stations',
       );
@@ -74,6 +53,11 @@ const Toka = ({navigation}) => {
     };
     asemat.push(newAsema);
   }
+
+  useEffect(() => {
+    fetchStations()
+  },[]);
+
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -115,7 +99,7 @@ const Toka = ({navigation}) => {
           itemsContainerStyle={{
             // Items container style you can pass maxHeight
             // To restrict the items dropdown hieght
-            maxHeight: '60%',
+            maxHeight: '70%',
           }}
           items={asemat}
           // Mapping of item array
@@ -130,13 +114,7 @@ const Toka = ({navigation}) => {
         />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={() => fetchTrain()}>
-          <Text style={styles.buttonText}> Lue junat </Text>
-        </TouchableOpacity>
-      </View>
+
     </SafeAreaView>
   );
 };

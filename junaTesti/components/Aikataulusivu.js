@@ -5,7 +5,6 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  Button,
 } from 'react-native';
 
 const Aikataulusivu = ({navigation, route}) => {
@@ -34,8 +33,6 @@ const Aikataulusivu = ({navigation, route}) => {
       console.log(error);
     }
   };
-
-  console.log(trainList);
 
   const renderTrain = item => {
     let timeAtTheStation;
@@ -76,10 +73,11 @@ const Aikataulusivu = ({navigation, route}) => {
       }
     }
 
+    
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
-          Määränpää{' '}
+          Määränpää:{' '}
           {item.item.timeTableRows[a - 1].stationShortCode}{' '}
           {item.item.trainCategory} Train {item.item.commuterLineID}{' '}
           {item.item.trainType}-{item.item.trainNumber}
@@ -90,6 +88,10 @@ const Aikataulusivu = ({navigation, route}) => {
       </View>
     );
   };
+
+  useEffect(() => {
+    fetchTrain()
+  },[stationSC]);
 
   const styles = StyleSheet.create({
     container: {
@@ -188,14 +190,6 @@ const Aikataulusivu = ({navigation, route}) => {
             renderItem={renderTrain}
           />
         </View>
-      </View>
-
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttonStyle}
-          onPress={() => fetchTrain()}>
-          <Text style={styles.buttonText}> Lue junat </Text>
-        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>

@@ -77,14 +77,14 @@ const Asemasivu = ({navigation}) => {
       fontSize: 30,
     },
     headerText: {
-      marginTop: 10,
-      borderWidth: 2,
+      borderWidth: 3,
       padding: 2,
       borderColor: 'black',
-      borderRadius: 10,
-      width: '60%',
+      
+      width: '100%',
       alignItems: 'center',
       backgroundColor: 'white',
+      paddingBottom: 10,
     },
 
     listText: {
@@ -95,37 +95,42 @@ const Asemasivu = ({navigation}) => {
       fontSize: 40,
       justifyContent: 'center',
     },
+    textstyle1: {
+      fontSize: 20,
+      color: 'black',
+      textDecorationLine: 'bold',
+    },
 
     listcontainer: {
       backgroundColor: '#3C9887',
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     listStyle: {
-      //Ja tähän vähän siistimpää tyylittelyä 4.10
       backgroundColor: '#c4c4c4',
       borderColor: 'black',
       borderWidth: 2,
       borderRadius: 5,
       width: '100%',
-
-      backgroundColor: 'white',
-
-      width: '80%',
     },
-    inputStyle: {
-      backgroundColor: '#abc',
+    listItem: {
+      alignItems: 'center',
+      backgroundColor: 'white',
+      fontSize: 20,
       borderColor: 'black',
       borderWidth: 2,
-      margin: 2,
       padding: 5,
-      width: '50%',
+      marginTop: 4,
+      marginBottom: 4,
+      marginRight: 4,
+      marginLeft: 4,
+      borderRadius: 10,
+
     },
-    touchableStyle: {
-      margin: 2,
-      padding: 5,
-      width: '40%',
+    listItemText: {
+      color: 'black',
+      textDecorationLine: 'bold',
+      fontSize: 30,
     },
   });
 
@@ -135,24 +140,24 @@ const Asemasivu = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.headercontainer}>
         <View style={styles.headerText}>
-          <Text>LEMPI ASEMASI OVAT TÄSSÄ</Text>
+          <Text style={styles.textstyle1}>TIETOKANNAN ASEMAT</Text>
         </View>
       </View>
 
       <View style={styles.listcontainer}>
-        <Text>Asemat:</Text>
+        
         <FlatList
           style={styles.listStyle}
           data={asemaList}
           renderItem={item => (
             <TouchableOpacity
-              style={styles.buttonStyle}
+              style={styles.listItem}
               onPress={() => navigation.navigate('Aikataulusivu', {
                 asemaKoodi: item.item.tunnus,
                 asemaNimi: item.item.asema,
               })}>
-                
-              <Text>{item.item.asema}</Text>
+
+              <Text style= {styles.listItemText}>{item.item.asema}</Text>
             </TouchableOpacity>
           )}
         />

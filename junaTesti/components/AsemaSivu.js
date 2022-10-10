@@ -101,31 +101,29 @@ const Asemasivu = ({navigation}) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     listStyle: {
-      //Ja tähän vähän siistimpää tyylittelyä 4.10
       backgroundColor: '#c4c4c4',
       borderColor: 'black',
       borderWidth: 2,
       borderRadius: 5,
       width: '100%',
-
-      backgroundColor: 'white',
-
-      width: '80%',
     },
-    inputStyle: {
-      backgroundColor: '#abc',
+    listItem: {
+      alignItems: 'center',
+      backgroundColor: '#dbdbdb',
       borderColor: 'black',
       borderWidth: 2,
-      margin: 2,
       padding: 5,
-      width: '50%',
+      marginTop: 4,
+      marginBottom: 4,
+      marginRight: 4,
+      marginLeft: 4,
+      borderRadius: 5,
+      
     },
-    touchableStyle: {
-      margin: 2,
-      padding: 5,
-      width: '40%',
+    listItemText: {
+      color: 'black',
+      textDecorationLine: 'bold',
     },
   });
 
@@ -146,13 +144,13 @@ const Asemasivu = ({navigation}) => {
           data={asemaList}
           renderItem={item => (
             <TouchableOpacity
-              style={styles.buttonStyle}
+              style={styles.listItem}
               onPress={() => navigation.navigate('Aikataulusivu', {
                 asemaKoodi: item.item.tunnus,
                 asemaNimi: item.item.asema,
               })}>
                 
-              <Text>{item.item.asema}</Text>
+              <Text style= {styles.listItemText}>{item.item.asema}</Text>
             </TouchableOpacity>
           )}
         />

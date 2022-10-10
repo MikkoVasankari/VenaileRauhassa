@@ -24,10 +24,9 @@ const AppButton = ({onPress, title}) => (
 );
 
 const Toka = ({navigation}) => {
-  
   const [serverData, setServerData] = useState([]);
 
-  const fetchStations= async () => {
+  const fetchStations = async () => {
     try {
       let response = await fetch(
         // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
@@ -54,10 +53,10 @@ const Toka = ({navigation}) => {
     asemat.push(newAsema);
   }
 
+  // useEffect muuttujien päivittämiseksi
   useEffect(() => {
-    fetchStations()
-  },[]);
-
+    fetchStations();
+  }, []);
 
   return (
     <SafeAreaView style={styles.screenContainer}>
@@ -113,8 +112,6 @@ const Toka = ({navigation}) => {
           // To remove the underline from the android input
         />
       </View>
-
-
     </SafeAreaView>
   );
 };

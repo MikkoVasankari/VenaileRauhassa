@@ -1,11 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
@@ -14,6 +8,7 @@ const Aikataulusivu = ({navigation, route}) => {
   const stationSC = route.params.asemaKoodi;
   const stationName = route.params.asemaNimi;
 
+  // Haetaan API-palvelusta junien lähtötiedot 60 min sisään asemalta
   const fetchTrain = async () => {
     try {
       let response = await fetch(
@@ -29,11 +24,31 @@ const Aikataulusivu = ({navigation, route}) => {
 
       // console.log(json);
       addToTrainList(json);
+      fetchStations();
     } catch (error) {
       console.log(error);
     }
   };
 
+  // Asetetaan asemille state Variable
+  const [asemat, setAsemat] = useState([]);
+
+  // Haetaan asemien koko nimet API-palvelusta koska vr ei ole halunnut laittaa niitä edelliseen API-kyselyyn
+  const fetchStations = async () => {
+    try {
+      let response = await fetch(
+        // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
+        'https://rata.digitraffic.fi/api/v1/metadata/stations',
+      );
+      let json = await response.json();
+
+      setAsemat(json);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Aikataululistan renderöinti funktio FlatListiin
   const renderTrain = item => {
     let timeAtTheStation;
     let slicetimeAtTheStation;
@@ -44,10 +59,17 @@ const Aikataulusivu = ({navigation, route}) => {
 
     let a = item.item.timeTableRows.length;
 
+    // Verrataan asemien lyhenteitä ja asetetaan aseman pitkä nimi muuttujaan asemanNimi 
+    for (let i = 0; i < asemat.length; i++) {
+      if (asemat[i].stationShortCode == item.item.timeTableRows[a - 1].stationShortCode) {
+        var asemanNimi = asemat[i].stationName;
+      }
+    }
+
     for (let i = 0; i < item.item.timeTableRows.length; i++) {
       // Otetaan juna-aikataulut halutulta asemalta
       if (item.item.timeTableRows[i].stationShortCode == stationSC) {
-        // Lähtemis aikataulu
+        // Saapumis aikataulu
         if (item.item.timeTableRows[i].type == 'ARRIVAL') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
@@ -59,6 +81,7 @@ const Aikataulusivu = ({navigation, route}) => {
           b += 3;
           timeInFinnishTimezone = b + slicedTimeForUTC2;
         }
+        // Lähtemis aikataulu
         if (item.item.timeTableRows[i].type == 'DEPARTURE') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
@@ -73,14 +96,11 @@ const Aikataulusivu = ({navigation, route}) => {
       }
     }
 
-    
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
-          Määränpää:{' '}
-          {item.item.timeTableRows[a - 1].stationShortCode}{' '}
-          {item.item.trainCategory} Train {item.item.commuterLineID}{' '}
-          {item.item.trainType}-{item.item.trainNumber}
+          Määränpää: {asemanNimi} {item.item.trainCategory} Train{' '}
+          {item.item.commuterLineID} {item.item.trainType}
         </Text>
         <Text style={styles.listItemText}>
           Arvioitu lähtemisaika {timeInFinnishTimezone}
@@ -89,10 +109,12 @@ const Aikataulusivu = ({navigation, route}) => {
     );
   };
 
+  // useEffect muuttujien päivittämiseksi 
   useEffect(() => {
-    fetchTrain()
-  },[stationSC]);
+    fetchTrain();
+  }, [stationSC]);
 
+  // Tyylittelyt tälle sivulle
   const styles = StyleSheet.create({
     container: {
       flex: 2,
@@ -179,7 +201,7 @@ const Aikataulusivu = ({navigation, route}) => {
         </View>
       </View>
       <View style={styles.timetableContainer}>
-        <Text>Saapuvat / Lähtevät junat:</Text>
+        <Text style={styles.headerText}>Saapuvat / Lähtevät junat:</Text>
       </View>
 
       <View>

@@ -23,7 +23,7 @@ const AppButton = ({onPress, title}) => (
   </TouchableOpacity>
 );
 
-const Toka = ({navigation}) => {
+const ValitseAsema = ({navigation}) => {
   
   const [serverData, setServerData] = useState([]);
 
@@ -152,4 +152,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Toka;
+export default ValitseAsema;

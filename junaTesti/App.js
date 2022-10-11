@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Aikataulusivu from './components/Aikataulusivu';
 import Asemasivu from './components/AsemaSivu';
-import Koti from './components/Koti';
+import Koti from './components/koti';
 import ValitseAsema from './components/ValitseAsema';
 
 const Naytot = createNativeStackNavigator();

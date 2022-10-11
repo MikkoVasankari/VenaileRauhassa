@@ -4,24 +4,11 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 
 // npm install react-native-searchable-dropdown <-install first and then import
 
-TouchableOpacity.defaultProps = {activeOpacity: 0.8};
-
-const AppButton = ({onPress, title}) => (
-  <TouchableOpacity onPress={onPress}>
-    <LinearGradient
-      colors={['#004d40', '#009688']}
-      style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>{title}</Text>
-    </LinearGradient>
-  </TouchableOpacity>
-);
 
 const ValitseAsema = ({navigation}) => {
   const [serverData, setServerData] = useState([]);

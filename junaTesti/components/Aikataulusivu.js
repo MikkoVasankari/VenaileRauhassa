@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView} from 'react-native';
 
 const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
@@ -18,7 +18,7 @@ const Aikataulusivu = ({navigation, route}) => {
 
         'https://rata.digitraffic.fi/api/v1/live-trains/station/' +
           stationSC +
-          '?minutes_before_departure=60&minutes_after_departure=0&minutes_before_arrival=0&minutes_after_arrival=0&train_categories=Long-distance&train_categories=Commuter',
+          '?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter',
       );
       let json = await response.json();
 
@@ -54,14 +54,15 @@ const Aikataulusivu = ({navigation, route}) => {
     let slicetimeAtTheStation;
     let slicedTimeForUTC1;
     let slicedTimeForUTC2;
-
     let timeInFinnishTimezone;
 
-    let a = item.item.timeTableRows.length;
-
-    // Verrataan asemien lyhenteitä ja asetetaan aseman pitkä nimi muuttujaan asemanNimi 
+    // Verrataan asemien lyhenteitä ja asetetaan aseman pitkä nimi muuttujaan asemanNimi
     for (let i = 0; i < asemat.length; i++) {
-      if (asemat[i].stationShortCode == item.item.timeTableRows[a - 1].stationShortCode) {
+      if (
+        asemat[i].stationShortCode ==
+        item.item.timeTableRows[item.item.timeTableRows.length - 1]
+          .stationShortCode
+      ) {
         var asemanNimi = asemat[i].stationName;
       }
     }
@@ -69,7 +70,10 @@ const Aikataulusivu = ({navigation, route}) => {
     for (let i = 0; i < item.item.timeTableRows.length; i++) {
       // Otetaan juna-aikataulut halutulta asemalta
       if (item.item.timeTableRows[i].stationShortCode == stationSC) {
-        // Saapumis aikataulu
+        // Asetaan junan myöhästuminen, jos juna on myöhässä
+        myohassa = item.item.timeTableRows[i].differenceInMinutes;
+
+        // Saapumis aikataulu tarkistus
         if (item.item.timeTableRows[i].type == 'ARRIVAL') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
@@ -81,7 +85,7 @@ const Aikataulusivu = ({navigation, route}) => {
           b += 3;
           timeInFinnishTimezone = b + slicedTimeForUTC2;
         }
-        // Lähtemis aikataulu
+        // Lähtemis aikataulu tarkistus
         if (item.item.timeTableRows[i].type == 'DEPARTURE') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
@@ -96,20 +100,39 @@ const Aikataulusivu = ({navigation, route}) => {
       }
     }
 
+    // Myöhässä komponentti myöhässä olemisen tulostamiseen jos myöhässä 
+    const MyohassaKomponentti = () => {
+      if (myohassa > 0){
+        return (
+          <Text style={{color:"red"}}>
+             {myohassa} minuuttia myöhässsä
+          </Text>
+        );
+      }
+      else{
+        return (
+          <Text style={styles.listItemText}>
+          </Text>
+        );
+      }
+    };
+
     return (
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
           Määränpää: {asemanNimi} {item.item.trainCategory} Train{' '}
-          {item.item.commuterLineID} {item.item.trainType}-{item.item.trainNumber}
+          {item.item.commuterLineID} {item.item.trainType}-
+          {item.item.trainNumber}
         </Text>
         <Text style={styles.listItemText}>
-          Arvioitu lähtemisaika {timeInFinnishTimezone}
+          Arvioitu lähtemisaika {timeInFinnishTimezone}{' '}
         </Text>
+        <MyohassaKomponentti />
       </View>
     );
   };
 
-  // useEffect muuttujien päivittämiseksi 
+  // useEffect muuttujien päivittämiseksi
   useEffect(() => {
     fetchTrain();
   }, [stationSC]);
@@ -193,7 +216,7 @@ const Aikataulusivu = ({navigation, route}) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
           <TouchableOpacity>
@@ -226,7 +249,7 @@ const Aikataulusivu = ({navigation, route}) => {
           <Text style={styles.buttonText}> Takaisin </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

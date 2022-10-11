@@ -217,7 +217,7 @@ const Aikataulusivu = ({navigation, route}) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          onPress={() => navigation.navigate('Koti')}>
+          onPress={() => navigation.navigate('Valitse Asema')}>
           <Text style={styles.buttonText}> Takaisin </Text>
         </TouchableOpacity>
       </View>

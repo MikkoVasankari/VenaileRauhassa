@@ -26,7 +26,6 @@ const Koti = ({navigation}) => {
           />
         </View>
       </View>
-      <Text style={styles.venaaTeksti}>VENAILE RAUHASSA</Text>
       <AppButton
         title="selaa aikatauluja"
         size="sm"

@@ -26,6 +26,7 @@ const AppButton = ({onPress, title}) => (
 const ValitseAsema = ({navigation}) => {
   const [serverData, setServerData] = useState([]);
 
+  // API-pyyntö
   const fetchStations = async () => {
     try {
       let response = await fetch(
@@ -41,9 +42,10 @@ const ValitseAsema = ({navigation}) => {
       console.log(error);
     }
   };
-
+  
+  // Tehdään uusi lista searchableDropdown-komponentille
   const asemat = [];
-
+  // Loopataan API-sta saatu lista
   for (let i = 0; i < serverData.length; i++) {
     // Tarkistetaan onko asema matkustaja liikenteelle
     if (serverData[i].passengerTraffic == true) {

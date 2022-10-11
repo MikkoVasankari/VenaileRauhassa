@@ -77,14 +77,14 @@ const Asemasivu = ({navigation}) => {
       fontSize: 30,
     },
     headerText: {
-      marginTop: 10,
-      borderWidth: 2,
+      borderWidth: 3,
       padding: 2,
       borderColor: 'black',
-      borderRadius: 10,
-      width: '60%',
+      
+      width: '100%',
       alignItems: 'center',
       backgroundColor: 'white',
+      paddingBottom: 10,
     },
 
     listText: {
@@ -94,6 +94,11 @@ const Asemasivu = ({navigation}) => {
       width: '80%',
       fontSize: 40,
       justifyContent: 'center',
+    },
+    textstyle1: {
+      fontSize: 20,
+      color: 'black',
+      textDecorationLine: 'bold',
     },
 
     listcontainer: {
@@ -110,7 +115,9 @@ const Asemasivu = ({navigation}) => {
     },
     listItem: {
       alignItems: 'center',
-      backgroundColor: '#dbdbdb',
+
+      backgroundColor: 'white',
+      fontSize: 20,
       borderColor: 'black',
       borderWidth: 2,
       padding: 5,
@@ -118,12 +125,15 @@ const Asemasivu = ({navigation}) => {
       marginBottom: 4,
       marginRight: 4,
       marginLeft: 4,
-      borderRadius: 5,
-      
+
+      borderRadius: 10,
+
     },
     listItemText: {
       color: 'black',
       textDecorationLine: 'bold',
+
+      fontSize: 30,
     },
   });
 
@@ -133,12 +143,12 @@ const Asemasivu = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.headercontainer}>
         <View style={styles.headerText}>
-          <Text>LEMPI ASEMASI OVAT TÄSSÄ</Text>
+          <Text style={styles.textstyle1}>TIETOKANNAN ASEMAT</Text>
         </View>
       </View>
 
       <View style={styles.listcontainer}>
-        <Text>Asemat:</Text>
+        
         <FlatList
           style={styles.listStyle}
           data={asemaList}
@@ -149,7 +159,7 @@ const Asemasivu = ({navigation}) => {
                 asemaKoodi: item.item.tunnus,
                 asemaNimi: item.item.asema,
               })}>
-                
+
               <Text style= {styles.listItemText}>{item.item.asema}</Text>
             </TouchableOpacity>
           )}

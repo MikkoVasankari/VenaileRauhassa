@@ -184,6 +184,11 @@ const Aikataulusivu = ({navigation, route}) => {
     },
     buttonText: {
       color: 'black',
+      padding: 3,
+      marginTop: 4,
+      marginBottom: 4,
+      marginRight: 4,
+      marginLeft: 4,
     },
   });
 

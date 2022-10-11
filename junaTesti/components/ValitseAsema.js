@@ -84,6 +84,7 @@ const ValitseAsema = ({navigation}) => {
             borderWidth: 1,
             borderColor: '#ccc',
             backgroundColor: '#FAF7F6',
+            color:'black'
           }}
           itemStyle={{
             // Single dropdown item style
@@ -112,6 +113,7 @@ const ValitseAsema = ({navigation}) => {
           // Reset textInput Value with true and false state
           underlineColorAndroid="transparent"
           // To remove the underline from the android input
+          
         />
       </View>
     </SafeAreaView>

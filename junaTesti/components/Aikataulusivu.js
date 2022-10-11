@@ -100,7 +100,7 @@ const Aikataulusivu = ({navigation, route}) => {
       <View style={styles.listItem}>
         <Text style={styles.listItemText}>
           Määränpää: {asemanNimi} {item.item.trainCategory} Train{' '}
-          {item.item.commuterLineID} {item.item.trainType}
+          {item.item.commuterLineID} {item.item.trainType}-{item.item.trainNumber}
         </Text>
         <Text style={styles.listItemText}>
           Arvioitu lähtemisaika {timeInFinnishTimezone}

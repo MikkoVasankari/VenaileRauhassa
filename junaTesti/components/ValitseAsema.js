@@ -23,9 +23,7 @@ const AppButton = ({onPress, title}) => (
   </TouchableOpacity>
 );
 
-
 const ValitseAsema = ({navigation}) => {
-  
   const [serverData, setServerData] = useState([]);
 
   const fetchStations = async () => {
@@ -47,12 +45,15 @@ const ValitseAsema = ({navigation}) => {
   const asemat = [];
 
   for (let i = 0; i < serverData.length; i++) {
-    newAsema = {
-      id: i,
-      name: serverData[i].stationName,
-      stationShortCode: serverData[i].stationShortCode,
-    };
-    asemat.push(newAsema);
+    // Tarkistetaan onko asema matkustaja liikenteelle
+    if (serverData[i].passengerTraffic == true) {
+      newAsema = {
+        id: i,
+        name: serverData[i].stationName,
+        stationShortCode: serverData[i].stationShortCode,
+      };
+      asemat.push(newAsema);
+    }
   }
 
   // useEffect muuttujien päivittämiseksi
@@ -84,7 +85,7 @@ const ValitseAsema = ({navigation}) => {
             borderWidth: 1,
             borderColor: '#ccc',
             backgroundColor: '#FAF7F6',
-            color:'black'
+            color: 'black',
           }}
           itemStyle={{
             // Single dropdown item style
@@ -113,7 +114,6 @@ const ValitseAsema = ({navigation}) => {
           // Reset textInput Value with true and false state
           underlineColorAndroid="transparent"
           // To remove the underline from the android input
-          
         />
       </View>
     </SafeAreaView>

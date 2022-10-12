@@ -7,29 +7,10 @@ import {
 } from 'react-native';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {
-  init,
-  addOneAsema,
-  fetchAllAsemat,
-  addHalutaAsemat,
   addAsema
 } from './db';
 
 // npm install react-native-searchable-dropdown <-install first and then import
-
-
-TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
-
-const AppButton = ({ onPress, title }) => (
-  <TouchableOpacity onPress={onPress}>
-    <LinearGradient
-      colors={['#004d40', '#009688']}
-      style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>{title}</Text>
-    </LinearGradient>
-  </TouchableOpacity>
-);
-
-
 
   async function saveAsema(stationName, stationShortCode){
     try{

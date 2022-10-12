@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import {
-  Button,
   FlatList,
   Text,
-  TextInput,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -31,7 +29,6 @@ addOneAsema()
   });
 
 const Asemasivu = ({navigation}) => {
-  const [isInserted, setIsInserted] = useState(false);
   const [asemaList, setAsemaList] = useState([]);
 
   async function readAllAsemat() {

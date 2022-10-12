@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,19 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import {
+  init,
+  addOneAsema,
+  fetchAllAsemat,
+  addHalutaAsemat,
+  addAsema
+} from './db';
 
 // npm install react-native-searchable-dropdown <-install first and then import
 
-TouchableOpacity.defaultProps = {activeOpacity: 0.8};
+TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
-const AppButton = ({onPress, title}) => (
+const AppButton = ({ onPress, title }) => (
   <TouchableOpacity onPress={onPress}>
     <LinearGradient
       colors={['#004d40', '#009688']}
@@ -23,11 +30,27 @@ const AppButton = ({onPress, title}) => (
   </TouchableOpacity>
 );
 
-const ValitseAsema = ({navigation}) => {
-  
+
+
+  async function saveAsema(stationName, stationShortCode){
+    try{
+      const dbResult = await addAsema(stationName, stationShortCode);
+      console.log("dbResult: "+dbResult);//For debugging purposes to see the data in the console screen
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      //No need to do anything
+    }
+  }
+
+
+  const ValitseAsema = ({ navigation }) => {
+
   const [serverData, setServerData] = useState([]);
 
-  const fetchStations= async () => {
+  const fetchStations = async () => {
     try {
       let response = await fetch(
         // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
@@ -43,8 +66,8 @@ const ValitseAsema = ({navigation}) => {
     }
   };
 
-  const asemat = [];
 
+  const asemat = [];
   for (let i = 0; i < serverData.length; i++) {
     newAsema = {
       id: i,
@@ -56,7 +79,7 @@ const ValitseAsema = ({navigation}) => {
 
   useEffect(() => {
     fetchStations()
-  },[]);
+  }, []);
 
 
   return (
@@ -68,14 +91,16 @@ const ValitseAsema = ({navigation}) => {
           // Listener on the searchable input
           onItemSelect={item => {
             alert('Valitsit aseman ' + item.name);
+            saveAsema(item.name, item.stationShortCode);
             navigation.navigate('Aikataulusivu', {
               asemaKoodi: item.stationShortCode,
               asemaNimi: item.name,
+             
             });
           }}
           onTextChange={text => console.log(text)}
           // Called after the selection
-          containerStyle={{padding: 5}}
+          containerStyle={{ padding: 5 }}
           // Suggestion container style
           textInputStyle={{
             // Inserted text style
@@ -110,7 +135,7 @@ const ValitseAsema = ({navigation}) => {
           resPtValue={false}
           // Reset textInput Value with true and false state
           underlineColorAndroid="transparent"
-          // To remove the underline from the android input
+        // To remove the underline from the android input
         />
       </View>
 

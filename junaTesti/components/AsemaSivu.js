@@ -135,7 +135,7 @@ const Asemasivu = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.headercontainer}>
         <View style={styles.headerText}>
-          <Text>LEMPI ASEMASI OVAT TÄSSÄ</Text>
+          <Text>VIIMEKSI VALITSEMASI ASEMAT</Text>
         </View>
       </View>
 

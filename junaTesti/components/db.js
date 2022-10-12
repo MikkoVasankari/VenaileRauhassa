@@ -23,13 +23,35 @@ export const init=()=>{
     return promise;
 };
 
+
+export const addAsema=(asema, tunnus)=>{
+    const promise=new Promise((resolve, reject)=>{
+        db.transaction((tx)=>{
+           
+            tx.executeSql('insert into '+tableName+'(asema, tunnus) values(?,?);',
+            //And the values come here
+            [asema, tunnus],
+            //If the transaction succeeds, this is called
+            ()=>{
+                    resolve();
+            },
+            //If the transaction fails, this is called
+            (_,err)=>{
+                reject(err);
+            }
+            );
+        });
+    });
+    return promise;
+};
+
 export const addOneAsema=()=>{
     const promise=new Promise((resolve, reject)=>{
         db.transaction((tx)=>{
             
-            tx.executeSql('insert into '+tableName+'(asema, tunnus) values(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?),(?,?)',
+            tx.executeSql('insert into '+tableName+'(asema, tunnus) values(?,?),(?,?),(?,?),(?,?),(?,?)',
             
-            ["Tampere","TPE","Helsinki","HKI","Turku","TKU","Hämeenlinna","HL","Lahti","LH","Riihimäki","RI","Nokia","NOA","Pasila","PSL"],
+            ["Tampere","TPE","Helsinki","HKI","Hämeenlinna","HL","Lahti","LH","Riihimäki","RI"],
             
             ()=>{
                     resolve();

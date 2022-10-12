@@ -7,7 +7,7 @@ const Aikataulusivu = ({navigation, route}) => {
   // Halutun aseman tiedot aseman valitsemis
   const stationSC = route.params.asemaKoodi;
   const stationName = route.params.asemaNimi;
-  
+
   // Haetaan API-palvelusta junien lähtötiedot 60 min sisään asemalta
   const fetchTrain = async () => {
     try {
@@ -85,6 +85,7 @@ const Aikataulusivu = ({navigation, route}) => {
           b += 3;
           timeInFinnishTimezone = b + slicedTimeForUTC2;
         }
+        
         // Lähtemis aikataulu tarkistus
         if (item.item.timeTableRows[i].type == 'DEPARTURE') {
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;

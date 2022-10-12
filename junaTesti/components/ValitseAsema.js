@@ -83,7 +83,7 @@ import {
             navigation.navigate('Aikataulusivu', {
               asemaKoodi: item.stationShortCode,
               asemaNimi: item.name,
-             
+
             });
           }}
           onTextChange={text => console.log(text)}

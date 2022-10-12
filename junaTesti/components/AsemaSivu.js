@@ -12,9 +12,6 @@ import {
   init,
   addOneAsema,
   fetchAllAsemat,
-  addHalutaAsemat,
-  addOneFish,
-  fetchAllFish,
 } from './db';
 
 init()

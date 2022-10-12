@@ -30,12 +30,14 @@ const ValitseAsema = ({navigation}) => {
     }
   };
   
-  // Tehdään uusi lista searchableDropdown-komponentille
+  // Tehdään uusi lista asemista searchableDropdown-komponentille
   const asemat = [];
+  
   // Loopataan API-sta saatu lista
   for (let i = 0; i < serverData.length; i++) {
     // Tarkistetaan onko asema matkustaja liikenteelle
     if (serverData[i].passengerTraffic == true) {
+      // Lisätään uusi asema tähän uuteen asemat-listaan
       newAsema = {
         id: i,
         name: serverData[i].stationName,

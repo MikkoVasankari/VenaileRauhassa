@@ -13,7 +13,7 @@ const Aikataulusivu = ({navigation, route}) => {
     try {
       let response = await fetch(
         // https://rata.digitraffic.fi/api/v1/live-trains/station/HL --- Antaa tietoja HL(Hämeenlinnan asema) tulevista junista.
-        // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot
+        // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot --- Linkki API-palveluun
         // https://rata.digitraffic.fi/api/v1/live-trains/station/RI?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
 
         'https://rata.digitraffic.fi/api/v1/live-trains/station/' +

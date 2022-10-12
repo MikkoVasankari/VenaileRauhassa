@@ -42,6 +42,8 @@ const Asemasivu = ({navigation}) => {
   }
   readAllAsemat();
 
+  asemaList.reverse();
+
   //---------TYYLIT ALKAA----------------------------------
   const styles = StyleSheet.create({
     listItemStyle: {

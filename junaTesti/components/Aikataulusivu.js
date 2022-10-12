@@ -132,6 +132,7 @@ const Aikataulusivu = ({navigation, route}) => {
       </View>
     );
   };
+  
 
   // useEffect muuttujien päivittämiseksi
   useEffect(() => {

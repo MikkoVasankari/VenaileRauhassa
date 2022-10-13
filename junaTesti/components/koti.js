@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-TouchableOpacity.defaultProps = {activeOpacity: 0.8};
 
 const AppButton = ({onPress, title}) => (
   <TouchableOpacity onPress={onPress}>

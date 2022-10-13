@@ -3,22 +3,22 @@ import {View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView} from '
 
 const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
-
+  
   // Halutun aseman tiedot aseman valitsemis
   const stationSC = route.params.asemaKoodi;
   const stationName = route.params.asemaNimi;
 
-  // Haetaan API-palvelusta junien lähtötiedot 60 min sisään asemalta
+  // Haetaan API-palvelusta junien lähtötiedot 60 min sisään asemalle saapumisesta
   const fetchTrain = async () => {
     try {
       let response = await fetch(
         // https://rata.digitraffic.fi/api/v1/live-trains/station/HL --- Antaa tietoja HL(Hämeenlinnan asema) tulevista junista.
         // https://www.digitraffic.fi/rautatieliikenne/#p%C3%A4iv%C3%A4n-junien-tiedot --- Linkki API-palveluun
-        // https://rata.digitraffic.fi/api/v1/live-trains/station/RI?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
+        // https://rata.digitraffic.fi/api/v1/live-trains/station/HL?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter
 
         'https://rata.digitraffic.fi/api/v1/live-trains/station/' +
           stationSC +
-          '?minutes_before_departure=60&minutes_after_departure=5&minutes_before_arrival=60&minutes_after_arrival=5&train_categories=Long-distance&train_categories=Commuter',
+          '?minutes_before_departure=60&minutes_after_departure=0&minutes_before_arrival=60&minutes_after_arrival=0&train_categories=Long-distance&train_categories=Commuter',
       );
       let json = await response.json();
 
@@ -50,11 +50,6 @@ const Aikataulusivu = ({navigation, route}) => {
 
   // Aikataululistan renderöinti funktio FlatListiin
   const renderTrain = item => {
-    let timeAtTheStation;
-    let slicetimeAtTheStation;
-    let slicedTimeForUTC1;
-    let slicedTimeForUTC2;
-    let timeInFinnishTimezone;
 
     // Verrataan asemien lyhenteitä ja asetetaan aseman pitkä nimi muuttujaan asemanNimi
     for (let i = 0; i < asemat.length; i++) {
@@ -75,6 +70,7 @@ const Aikataulusivu = ({navigation, route}) => {
 
         // Saapumis aikataulu tarkistus
         if (item.item.timeTableRows[i].type == 'ARRIVAL') {
+          junanTyyppi = "Saapuva";
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
           slicetimeAtTheStation = timeAtTheStation.slice(11, 19);
@@ -88,6 +84,7 @@ const Aikataulusivu = ({navigation, route}) => {
         
         // Lähtemis aikataulu tarkistus
         if (item.item.timeTableRows[i].type == 'DEPARTURE') {
+          junanTyyppi = "Lähtevä";
           timeAtTheStation = item.item.timeTableRows[i].scheduledTime;
 
           slicetimeAtTheStation = timeAtTheStation.slice(11, 19);
@@ -123,7 +120,10 @@ const Aikataulusivu = ({navigation, route}) => {
         <Text style={styles.listItemText}>
           Määränpää: {asemanNimi} {item.item.trainCategory} Train{' '}
           {item.item.commuterLineID} {item.item.trainType}-
-          {item.item.trainNumber}
+          {item.item.trainNumber}{' '}
+        </Text>
+        <Text style={styles.listItemText}>
+          {junanTyyppi} juna
         </Text>
         <Text style={styles.listItemText}>
           Arvioitu lähtemisaika {timeInFinnishTimezone}{' '}
@@ -132,7 +132,7 @@ const Aikataulusivu = ({navigation, route}) => {
       </View>
     );
   };
-  
+
 
   // useEffect muuttujien päivittämiseksi
   useEffect(() => {
@@ -242,6 +242,7 @@ const Aikataulusivu = ({navigation, route}) => {
             renderItem={renderTrain}
           />
         </View>
+        
       </View>
 
       <View style={styles.buttonContainer}>

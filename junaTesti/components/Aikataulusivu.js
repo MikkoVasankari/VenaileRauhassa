@@ -4,7 +4,7 @@ import {View, Text, FlatList, StyleSheet, TouchableOpacity, SafeAreaView} from '
 const Aikataulusivu = ({navigation, route}) => {
   const [trainList, addToTrainList] = useState([]);
   
-  // Halutun aseman tiedot aseman valitsemis
+  // Halutun aseman tiedot aikataulun hakua varten
   const stationSC = route.params.asemaKoodi;
   const stationName = route.params.asemaNimi;
 

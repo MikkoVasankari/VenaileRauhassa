@@ -51,7 +51,6 @@ import {
   const asemat = [];
   
   // Loopataan API-sta saatu lista
-
   for (let i = 0; i < serverData.length; i++) {
     // Tarkistetaan onko asema matkustaja liikenteelle
     if (serverData[i].passengerTraffic == true) {

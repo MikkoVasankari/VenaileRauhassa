@@ -1,0 +1,11 @@
+Suoritä nämä jos haluat että sovellus toimii:  
+
+npm install react-native-linear-gradient 
+
+npm install react-native-searchable-dropdown  
+
+npm install react-native-sqlite-storage 
+
+npm install @react-navigation/native @react-navigation/native-stack 
+
+npm install react-native-screens react-native-safe-area-context 
